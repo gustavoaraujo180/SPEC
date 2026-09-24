@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal de Ponto - Leitura QR Code</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Cabeçalho do Terminal -->
+  <header class="kiosk-header">
+    <div class="logo-area">
+      <i data-lucide="camera" style="width: 28px; height: 28px; color: var(--primary);"></i>
+      <h1 class="logo-title">Terminal de Controle de Ponto</h1>
+    </div>
+    <div class="clock-area">
+      <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+      <span id="live-clock" class="clock-time">00:00:00</span>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="kiosk-main">
+    <!-- Leitor de Câmera e QR Code -->
+    <section class="kiosk-card">
+      <div class="card-title">
+        <i data-lucide="camera" style="width: 20px; height: 20px;"></i>
+        <span>Leitor de QR Code do Crachá</span>
+      </div>
+
+      <div class="scanner-container">
+        <video id="webcam-video" class="video-feed" autoplay playsinline muted></video>
+        <canvas id="snapshot-canvas" style="display: none;"></canvas>
+
+        <div class="scanner-overlay">
+          <div class="scan-region"></div>
+          <div class="scan-guide">Aproxime o QR Code do crachá da câmera</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Painel Lateral de Status e Instruções -->
+    <aside class="kiosk-card info-section">
+      <div class="card-title">
+        <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
+        <span>Status do Sistema</span>
+      </div>
+
+      <div>
+        <span class="status-badge active" id="status-badge">
+          <i data-lucide="check-circle-2" style="width: 16px; height: 16px;"></i>
+          Câmera Ativa & Aguardando
+        </span>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--border-color);">
+
+      <div class="card-title">
+        <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+        <span>Instruções de Uso</span>
+      </div>
+
+      <ul class="instructions-list">
+        <li>
+          <i data-lucide="check-circle-2" style="width: 18px; height: 18px; color: var(--success); flex-shrink: 0;"></i>
+          <span>Posicione o QR Code impresso no crachá em frente à câmera.</span>
+        </li>
+        <li>
+          <i data-lucide="check-circle-2" style="width: 18px; height: 18px; color: var(--success); flex-shrink: 0;"></i>
+          <span>O registro será validado automaticamente dentro da janela permitida.</span>
+        </li>
+        <li>
+          <i data-lucide="check-circle-2" style="width: 18px; height: 18px; color: var(--success); flex-shrink: 0;"></i>
+          <span>Após aprovação, um comprovante em ticket será gerado para impressão.</span>
+        </li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Modal de Feedback (Sucesso / Bloqueio) -->
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="modal-card">
+      <div class="modal-icon-container success" id="modal-icon-box">
+        <i data-lucide="check-circle-2" id="modal-icon" style="width: 36px; height: 36px;"></i>
+      </div>
+      <h2 class="modal-title" id="modal-title">Ponto Registrado!</h2>
+      <p class="modal-message" id="modal-message">Registro de entrada realizado com sucesso.</p>
+
+      <div class="modal-details" id="modal-details">
+        <div class="detail-row">
+          <span style="color: var(--text-muted);">Funcionário:</span>
+          <strong id="detail-nome">-</strong>
+        </div>
+        <div class="detail-row">
+          <span style="color: var(--text-muted);">Matrícula:</span>
+          <strong id="detail-matricula">-</strong>
+        </div>
+        <div class="detail-row">
+          <span style="color: var(--text-muted);">Horário:</span>
+          <strong id="detail-horario">-</strong>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-close-modal">Continuar</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
